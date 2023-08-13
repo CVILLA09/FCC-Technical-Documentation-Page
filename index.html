@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Solidity Documentation</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <nav id="navbar">
+    <header>Solidity Documentation</header>
+    <ul>
+      <li>
+        <a class="nav-link" href="#Getting_Started">Getting Started</a>
+      </li>
+      <li>
+        <a class="nav-link" href="#Hello_World">Hello World</a>
+      </li>
+      <li>
+        <a class="nav-link" href="#First_App">First App</a>
+      </li>
+      <li>
+        <a class="nav-link" href="#Primitive_Data_Types">Primitive Data Types</a>
+      </li>
+      <li>
+        <a class="nav-link" href="#Variables">Variables</a>
+      </li>
+      <li>
+        <a class="nav-link" href="#Constants">Constants</a>
+      </li>
+    </nav>
+    <main id="main-doc">
+      <section class="main-section" id="Getting_Started">
+        <header>Getting Started</header>
+        <p>Steps in getting started</p>
+        <ol>
+          <li>Understand the Smart Contract Basics
+            <p>If you are new to the concept of smart contracts we recommend you to get started by digging into the “Introduction to Smart Contracts” section, which covers:</p>
+            <ul>
+              <li>A simple example smart contract written in Solidity.</li>
+              <li>Blockchain Basics.</li>
+              <li>The Ethereum Virtual Machine.</li>
+            </ul>
+          </li>
+          <li>Get to Know Solidity
+            <p>Once you are accustomed to the basics, we recommend you read the “Solidity by Example” and “Language Description” sections to understand the core concepts of the language.</p>
+          </li>
+          <li>Install the Solidity Compiler
+            <p>There are various ways to install the Solidity compiler, simply choose your preferred option and follow the steps outlined on the installation page.</p>
+          </li>
+          <li>Learn More
+            <p>If you want to learn more about building decentralized applications on Ethereum, the Ethereum Developer Resources can help you with further general documentation around Ethereum, and a wide selection of tutorials, tools and development frameworks.</p>
+            <p>If you have any questions, you can try searching for answers or asking on the Ethereum StackExchange, or our Gitter channel.</p>
+          </li>
+        </ol>
+      </section>
+      <section class="main-section" id="Hello_World">
+        <header>Hello World</header>
+        <p>pragma specifies the compiler version of Solidity.</p>
+        <pre>
+          <code>
+            // SPDX-License-Identifier: MIT
+// compiler version must be greater than or equal to 0.8.17 and less than 0.9.0
+pragma solidity ^0.8.17;
+
+contract HelloWorld {
+    string public greet = "Hello World!";
+}
+          </code>
+        </pre>
+      </section>
+      <section class="main-section" id="First_App">
+        <header>First App</header>
+        <p>Here is a simple contract that you can get, increment and decrement the count store in this contract.</p>
+        <pre>
+          <code>// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.17;
+
+contract Counter {
+    uint public count;
+
+    // Function to get the current count
+    function get() public view returns (uint) {
+        return count;
+    }
+
+    // Function to increment count by 1
+    function inc() public {
+        count += 1;
+    }
+
+    // Function to decrement count by 1
+    function dec() public {
+        // This function will fail if count = 0
+        count -= 1;
+    }
+}
+</code>
+        </pre>
+      </section>
+      <section class="main-section" id="Primitive_Data_Types">
+        <header>Primitive Data Types</header>
+        <p>Here we introduce you to some primitive data types available in Solidity.</p>
+        <ul>
+          <li>boolean</li>
+          <li>uint</li>
+          <li>int</li>
+          <li>address</li>
+        </ul>
+        <pre>
+          <code>// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.17;
+
+contract Primitives {
+    bool public boo = true;
+
+    /*
+    uint stands for unsigned integer, meaning non negative integers
+    different sizes are available
+        uint8   ranges from 0 to 2 ** 8 - 1
+        uint16  ranges from 0 to 2 ** 16 - 1
+        ...
+        uint256 ranges from 0 to 2 ** 256 - 1
+    */
+    uint8 public u8 = 1;
+    uint public u256 = 456;
+    uint public u = 123; // uint is an alias for uint256
+
+    /*
+    Negative numbers are allowed for int types.
+    Like uint, different ranges are available from int8 to int256
+    
+    int256 ranges from -2 ** 255 to 2 ** 255 - 1
+    int128 ranges from -2 ** 127 to 2 ** 127 - 1
+    */
+    int8 public i8 = -1;
+    int public i256 = 456;
+    int public i = -123; // int is same as int256
+
+    // minimum and maximum of int
+    int public minInt = type(int).min;
+    int public maxInt = type(int).max;
+
+    address public addr = 0xCA35b7d915458EF540aDe6068dFe2F44E8fa733c;
+
+    /*
+    In Solidity, the data type byte represent a sequence of bytes. 
+    Solidity presents two type of bytes types :
+
+     - fixed-sized byte arrays
+     - dynamically-sized byte arrays.
+     
+     The term bytes in Solidity represents a dynamic array of bytes. 
+     It’s a shorthand for byte[] .
+    */
+    bytes1 a = 0xb5; //  [10110101]
+    bytes1 b = 0x56; //  [01010110]
+
+    // Default values
+    // Unassigned variables have a default value
+    bool public defaultBoo; // false
+    uint public defaultUint; // 0
+    int public defaultInt; // 0
+    address public defaultAddr; // 0x0000000000000000000000000000000000000000
+}
+</code>
+        </pre>
+      </section>
+      <section class="main-section" id="Variables">
+        <header>Variables</header>
+        <p>There are 3 types of variables in Solidity</p>
+        <ul>
+          <li>local<br/>
+          <p>declared inside a function</p>
+          <p>not stored on the blockchain</p>
+          </li>
+          <li>state<br/>
+          <p>declared outside a function</p>
+          <p>stored on the blockchain</p>
+          </li>
+          <li>global<p>(provides information about the blockchain)</p></li>
+        </ul>
+        <pre>
+          <code>// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.17;
+
+contract Variables {
+    // State variables are stored on the blockchain.
+    string public text = "Hello";
+    uint public num = 123;
+
+    function doSomething() public {
+        // Local variables are not saved to the blockchain.
+        uint i = 456;
+
+        // Here are some global variables
+        uint timestamp = block.timestamp; // Current block timestamp
+        address sender = msg.sender; // address of the caller
+    }
+}
+</code>
+        </pre>
+      </section>
+      <section class="main-section" id="Constants">
+        <header>Constants</header>
+        <p>Constants are variables that cannot be modified.</p>
+        <p>Their value is hard coded and using constants can save gas cost.</p>
+        <pre>
+          <code>// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.17;
+
+contract Constants {
+    // coding convention to uppercase constant variables
+    address public constant MY_ADDRESS = 0x777788889999AaAAbBbbCcccddDdeeeEfFFfCcCc;
+    uint public constant MY_UINT = 123;
+}
+</code>
+        </pre>
+      </section>
+      <footer>
+        <p>Documentation brought to you by Cristian Villa </p>
+      </footer>
+    </main>
+  </body>
+</html>
